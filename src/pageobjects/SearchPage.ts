@@ -1,4 +1,4 @@
-import { Page } from './Page';
+import { BasePage } from './BasePage';
 import { browser, Element } from 'webdriverio';
 
 class SearchPage extends Page {
@@ -7,21 +7,27 @@ private secondBrandCheckbox: Element;
 private starRatingFilter: Element;
 private firstResult: Element;
 
-constructor() {
-        super();
-        this.firstBrandCheckbox = $('(//input[@type="checkbox"])[3]');
-        this.secondBrandCheckbox = $('(//input[@type="checkbox"])[4]');
-        this.starRatingFilter = $('[data-star-ratings="3"]');
-        this.firstResult = $('(//span[@class="a-price-whole"])[1]');
+export class SearchPage extends BasePage {
+
+constructor(browser: BrowserObject) {
+        super(browser);
+        //checkbox under Brands filter
+        this.checkboxBrand = "(//div[@id='brandsRefinements']//div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])";
+       //Requirement is to click the 3-star rating filter
+        this.starRatingFilter = $('.a-star-medium-3');
+       //Requirement is to click the first populated result
+        this.firstResult = $('(//div[@class="sg-col-inner"]//div[@class="a-row a-size-base a-color-base"])[1]');
     }
 
-    async checkFirstBrandCheckbox() {
-        await this.firstBrandCheckbox.click();
-    }
+static async selectBrandFilter(checkboxNumber: number): Promise<void> {
 
-    async checkSecondBrandCheckbox() {
-        await this.secondBrandCheckbox.click();
-    }
+  const dynamicXPath = `${this.checkboxBrand}[${checkboxNumber}]`;
+
+  checkbox = await browser.$(dynamicXPath);
+//Performing Assertion
+    expect(await checkbox.isClickable(), 'Brand checkbox is not clickable').to.be.true;
+    await checkbox.click();
+  }
 
     async applyThreeStarRating() {
         await this.starRatingFilter.click();

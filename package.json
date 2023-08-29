@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Amazon Product Search and Tech Specification",
   "scripts": {
-    "test": "wdio wdio.conf.js",
+    "test": "wdio wdio.conf.ts",
     "cucumber": "cucumber-js",
     "build": "tsc"
   },
@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "@types/node": "^16.11.7",
-    "@types/webdriverio": "^7.16.0"
+    "@types/webdriverio": "^7"
   }
 }

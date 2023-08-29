@@ -4,12 +4,11 @@ import { browser } from 'webdriverio';
 
 const searchPage = new SearchPage();
 
-When('I check the first brand checkbox', async () => {
-    await searchPage.checkFirstBrandCheckbox();
-});
-
-When('I check the second brand checkbox', async () => {
-    await searchPage.checkSecondBrandCheckbox();
+When('I select first two brand filters', async (table: TableDefinition) => {
+  const checkboxNumbers = table.hashes();
+  for (const { checkboxnum } of checkboxNumbers) {
+    await SearchPage.selectBrandFilter(Number(checkboxnum));
+  }
 });
 
 When('I apply a three-star rating', async () => {
@@ -22,7 +21,7 @@ When('I select the first result', async () => {
     await selectFirstResultAndWait(parentWindowHandle);
 });
 
-Then('I handle the newly opened result window and perform scroll and print the tech specification',async() => {
+Then('I navigate to the newly opened result window and perform scroll and print the tech specification',async() => {
 async function selectFirstResultAndWait(parentWindowHandle) {
     await browser.waitUntil(async () => {
         const windowHandles = await browser.getWindowHandles();

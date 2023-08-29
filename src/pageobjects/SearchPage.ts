@@ -2,8 +2,7 @@ import { BasePage } from './BasePage';
 import { browser, Element } from 'webdriverio';
 
 class SearchPage extends Page {
-private firstBrandCheckbox: Element;
-private secondBrandCheckbox: Element;
+private checkboxBrand: Element;
 private starRatingFilter: Element;
 private firstResult: Element;
 
